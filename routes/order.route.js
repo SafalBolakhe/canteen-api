@@ -1,8 +1,7 @@
 const router = require("express").Router();
 const User = require("../models/user.model");
 const Order = require("../models/order.model");
-const verify = require("./user.route");
-
+const verify = require("../verify");
 router.get("/all", verify, async (req, res) => {
   try {
     id = req.payload.id;

@@ -12,12 +12,17 @@ const receiptSchema = new mongoose.Schema(
       default: [],
     },
     cost: {
-      type: Integer,
+      type: Number,
       default: 0,
+    },
+    id: {
+      type: String,
+      required: true,
     },
   },
   {
     timestamps: true,
   }
 );
-module.exports = mongoose.models("Receipt", receiptSchema);
+
+module.exports = mongoose.model("Receipts", receiptSchema);
