@@ -10,7 +10,7 @@ const costgrabber = async (items) => {
     sum += founditem.cost;
     // console.log(sum);
   }
-  console.log(sum);
+  // console.log(sum);
   return sum;
 };
 
