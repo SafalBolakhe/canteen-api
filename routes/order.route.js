@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const User = require("../models/user.model");
 const Order = require("../models/order.model");
+const costGrabber = require("../costgrabber");
 const verify = require("../verify");
 router.get("/all", verify, async (req, res) => {
   try {
@@ -42,7 +43,7 @@ router.put("/editorder/:id", verify, async (req, res) => {
 router.delete("/editorder/:id", verify, async (req, res) => {
   const id = req.payload.id;
   const orderId = req.params.id;
-//   console.log(orderId);
+  //   console.log(orderId);
   try {
     const username = await User.findById(id);
     const orders = await Order.findById(orderId);
@@ -59,14 +60,19 @@ router.post("/addorder", verify, async (req, res) => {
   try {
     id = req.payload.id;
     const username = await User.findById(id);
-    // console.log(username.username);
-    const newOrder = new Order({
-      username: username.username,
-      items: req.body.items,
-      cost: req.body.cost,
-    });
-    const savedOrder = await newOrder.save();
-    res.status(200).json(savedOrder);
+    cost = await costGrabber(req.body.items);
+    if (cost === 0) {
+      res.status(500).json("Item not Found");
+    } else {
+      // console.log(username.username);
+      const newOrder = new Order({
+        username: username.username,
+        items: req.body.items,
+        cost: cost,
+      });
+      const savedOrder = await newOrder.save();
+      res.status(200).json(savedOrder);
+    }
   } catch (error) {
     res.status(500).json(error);
   }
