@@ -22,6 +22,20 @@ router.post("/registration", async (req, res) => {
     res.status(500).json(error);
   }
 });
+router.post("/logout", async (req, res) => {
+  try {
+    // console.log(req.body);
+    if (req.headers.authorization) {
+      req.headers.authorization = "";
+      res.status(200).json("Logged out successfully");
+    } else {
+      res.status(500).json("You need to Login first");
+
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 
 router.post("/login", async (req, res) => {
   const name = req.body.username;
