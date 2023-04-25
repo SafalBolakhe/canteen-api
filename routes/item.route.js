@@ -56,10 +56,13 @@ router.post("/additem", verify, async (req, res) => {
     id = req.payload.id;
     const username = await User.findById(id);
     // console.log(username.username);
+    // console.log(await Item.find({ itemname: req.body.itemname }).count());
+    // console.log(username.role);
     // console.log(req.body.cost);
+    // console.log(req.body.itemname);
     if (
-      username.role === "admin" &&
-      !Item.find({ itemname: req.body.itemname })
+      (username.role === "admin") &&
+      (await Item.find({ itemname: req.body.itemname }).count() === 0)
     ) {
       const newItem = new Item({
         itemname: req.body.itemname,

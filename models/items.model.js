@@ -13,10 +13,10 @@ const itemSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  },
-  {
-    unique: true,
   }
+  // {
+  //   unique: true,
+  // }
 );
 
 module.exports = mongoose.model("Items", itemSchema);
